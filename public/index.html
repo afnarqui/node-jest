@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat en tiempo real</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .chat-box {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+    }
+    .message-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .message-list li {
+      margin-bottom: 10px;
+    }
+    .message-list li span.username {
+      font-weight: bold;
+    }
+    .message-list li span.message {
+      font-style: italic;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-box">
+    <ul class="message-list"></ul>
+    <input type="text" id="message-input">
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const messageList = document.querySelector('.message-list');
+    const messageInput = document.querySelector('#message-input');
+
+    socket.on('chat message', (message) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="username">${message.username}:</span> <span class="message">${message.message}</span>`;
+      messageList.appendChild(li);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      messageInput.focus();
+    });
+
+    messageInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        const message = messageInput.value.trim();
+        if (message !== '') {
+          socket.emit('chat message', { username: 'Usuario', message });
+          messageInput.value = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
