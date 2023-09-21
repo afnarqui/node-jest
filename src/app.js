@@ -14,6 +14,12 @@ router.post('/users', (req, res) => {
   return res.status(201).send(users)
 })
 
+router.post('/userstwo', (req, res) => {
+  const { name , address, age, uid } = req.body
+  users.push( { name , address, age, uid })
+  return res.status(201).send({message: 'success'})
+})
+
 router.get('/users', (req, res) => {
   return res.status(200).send(users)
 })
