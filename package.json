@@ -219,11 +219,15 @@
   "devDependencies": {
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jest": "^27.4.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.0.1",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "supertest": "^6.3.3"
   },
   "scripts": {
+    "test": "jest",
     "start:local": "nodemon ./src/server.js",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|json|md|)\""
